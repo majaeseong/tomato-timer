@@ -1,45 +1,23 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, StatusBar} from 'react-native';
-import Button from '../Button';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {actionCreators } from '../../reducer';
+import Timer from './presenter';
 
-class Timer extends Component{
-    render(){
-        return(
-            <View style={styles.container}>
-                <StatusBar barStyle='light-content'/>
-                <View style={styles.upper}>
-                    <Text style={styles.timer}>24:00</Text>
-                </View>
-                
-                <View style={styles.lower}>
-                    <Button iconName={"play-circle"} onPress={()=>{alert('play')}}/>
-                    <Button iconName={"stop-circle"} onPress={()=>{alert('stop')}}/>
-                </View>
-            </View>
-        )
+function mapStateToProps(state){
+    const{isPlaying,elapsedTime,maxTime} = state;
+    return{
+        isPlaying,elapsedTime,maxTime
     }
 }
 
-export default Timer;
-
-const styles=  StyleSheet.create({
-    container:{
-        backgroundColor:'#CE0B24',
-        flex:1   
-    },
-    upper:{
-        flex:2,
-        justifyContent:'center',
-        alignItems:'center'
-    },
-    lower:{
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center'
-    },
-    timer:{
-        color:'white',
-        fontSize:120,
-        fontWeight:'100'
+function mapDispatchToProps(dispatch){
+                //action to Reducer  
+    return{
+        timerStart :  bindActionCreators(actionCreators.timerStart,dispatch),
+        timerRestart : bindActionCreators(actionCreators.timerRestart, dispatch),
+        addSecond : bindActionCreators(actionCreators.addSecond, dispatch )
     }
-})
+    
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Timer);

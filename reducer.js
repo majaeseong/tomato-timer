@@ -61,10 +61,11 @@
         }
     }
     function applyAddSecond(state){
-        if(state.elapsedTime < TIMER_DURATION){
+        const { elapsedTime } = state;
+        if(elapsedTime < TIMER_DURATION){
             return{
                 ...state,
-                elapsedTime : elapsedTime+1
+                elapsedTime : elapsedTime + 1
             }
         }else{
             return{
@@ -80,6 +81,8 @@
         timerRestart,
         addSecond
     };
+
+    export {actionCreators};
 
 //Export Reducer
     export default reducer;
